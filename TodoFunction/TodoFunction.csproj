@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net461</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="ClientApp\angular-todo\node_modules\**" />
+    <EmbeddedResource Remove="ClientApp\angular-todo\node_modules\**" />
+    <None Remove="ClientApp\angular-todo\node_modules\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="ImageResizer" Version="4.0.5" />
+    <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="1.0.6" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="host.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="local.settings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>Never</CopyToPublishDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ClientApp\" />
+  </ItemGroup>
+  <ProjectExtensions><VisualStudio><UserProperties /></VisualStudio></ProjectExtensions>
+</Project>
