@@ -17,8 +17,10 @@ namespace TodoFunction
     public static class TodoFunction
     {
         [FunctionName("GetAllTodo")]
-        public static HttpResponseMessage GetAllTodo(
+        public static HttpResponseMessage/*Output*/ GetAllTodo(
+            //Trigger
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "todo")]HttpRequestMessage req,
+            // Input 
             [Table("Todo", Connection = "TableConnectionString")] IQueryable<Todo> todos,
             TraceWriter log)
         {
@@ -57,7 +59,7 @@ namespace TodoFunction
         }
 
         [FunctionName("AddTodo")]
-        public static HttpResponseMessage AddTodo(
+        public static void AddTodo(
              [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "todo")]string task,
              [Table("Todo", Connection = "TableConnectionString")] out Todo todo,
              [Queue("slack-queue")] out string slackQueue,
@@ -72,7 +74,7 @@ namespace TodoFunction
                 RowKey = Guid.NewGuid().ToString()
             };
 
-            slackQueue = task;
+            slackQueue = $"·s¼W Todo {task}";
 
             var todoJson = JsonConvert.SerializeObject(new
             {
@@ -80,13 +82,6 @@ namespace TodoFunction
                 todo.Done,
                 Key = todo.RowKey
             });
-
-            return new HttpResponseMessage
-            {
-                StatusCode = HttpStatusCode.Created,
-                Content = new StringContent(todoJson, Encoding.UTF8, "application/json")
-
-            };
         }
 
         [FunctionName("CompletedTodo")]

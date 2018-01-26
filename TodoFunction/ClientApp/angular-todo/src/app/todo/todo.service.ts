@@ -7,7 +7,7 @@ import { Todo } from './todo';
 @Injectable()
 export class TodoService {
 
-  private baseUrl = 'http://localhost:7071/api/todo';
+  private baseUrl = 'https://exile-azure-funciton.azurewebsites.net/api/todo';
   constructor(private http: HttpClient) { }
 
   getAll(): Observable<Todo[]> {
